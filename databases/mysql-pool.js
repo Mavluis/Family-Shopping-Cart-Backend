@@ -11,14 +11,10 @@ async function connect() {
     database: process.env.MYSQL_DATABASE,
     port: process.env.MYSQL_PORT,
     timezone: 'Z',
-    // debug: true,
     multipleStatements: true,
   };
 
-  /**
-   * Create connection pool and
-   * promisify it to use async / await
-   */
+  /* Create bbdd MySql */
   const pool = mysql.createPool(options);
   this.pool = pool.promise();
 

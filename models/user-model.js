@@ -1,8 +1,8 @@
 'use strict';
 
-const mongoose = require('mongoose');
+const mysqlPool = require('./databases/mysql-pool');
 
-const { Schema } = mongoose;
+const { Schema } = mysqlPool;
 
 const userSchema = new Schema({
   uuid: {
@@ -35,6 +35,6 @@ userSchema.index(
   },
 );
 
-const User = mongoose.model('User', userSchema);
+const User = mysqlPool.model('User', userSchema);
 
 module.exports = User;

@@ -1,11 +1,10 @@
 'use strict';
 
-const mongoose = require('mongoose');
+const mysqlPool = require('./databases/mysql-pool');
 
-const { Schema } = mongoose;
+const { Schema } = mysqlPool;
 
 const postSchema = new Schema({
-  owner: String,
   author: String,
   content: String,
   likes: [String],
@@ -21,6 +20,6 @@ const postSchema = new Schema({
   deletedAt: Date,
 });
 
-const Post = mongoose.model('Post', postSchema);
+const Post = mysqlPool.model('Post', postSchema);
 
 module.exports = Post;

@@ -5,19 +5,19 @@ const Joi = require('joi');
 const uuidV4 = require('uuid/v4');
 const sendgridMail = require('@sendgrid/mail');
 const mysqlPool = require('../../databases/mysql-pool');
-const WallModel = require('../../models/wall-model');
+const CartModel = require('../../models/cart-model');
 const UserModel = require('../../models/user-model');
 
 sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 async function validateSchema(payload) {
-  /**
-   * TODO: Fill email, password and full name rules to be (all fields are mandatory):
-   *  email: Valid email
-   *  password: Letters (upper and lower case) and number
-   *    Minimun 3 and max 30 characters, using next regular expression: /^[a-zA-Z0-9]{3,30}$/
-   * fullName: String with 3 minimun characters and max 128
-   */
+
+/* Fill email, password and full name:
+email: Valid email
+password: Letters (upper and lower case) and number
+Minimun 3 and max 30 characters, using next regular expression: /^[a-zA-Z0-9]{3,30}$/
+fullName: String with 3 minimun characters and max 128 */
+  
   const schema = {
     email: Joi.string().email({ minDomainAtoms: 2 }).required(),
     password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/).required(),
@@ -27,19 +27,17 @@ async function validateSchema(payload) {
 }
 
 /**
- * Create users wall
- * @param {String} uuid User identifier
- * @return {Object} wall Users wall
+Create users cart
  */
-async function createWall(uuid) {
+async function createCart(uuid) {
   const data = {
     uuid,
     posts: [],
   };
 
-  const wall = await WallModel.create(data);
+  const cart = await CartModel.create(data);
 
-  return wall;
+  return cart;
 }
 
 async function createProfile(uuid) {
@@ -91,11 +89,11 @@ async function sendEmailRegistration(userEmail, verificationCode) {
   const msg = {
     to: userEmail,
     from: {
-      email: 'socialnetwork@yopmail.com',
-      name: 'Social Network :)',
+      email: 'familyshoppingcart@yopmail.com',
+      name: 'Family Shopping Cart',
     },
-    subject: 'Welcome to Hack a Bos Social Network',
-    text: 'Start meeting people of your interests',
+    subject: 'Welcome to Family Shopping Cart',
+    text: 'Don`t ever forget any product in the supermarket.',
     html: `To confirm the account <a href="${linkActivacion}">activate it here</a>`,
   };
 
@@ -141,7 +139,7 @@ async function createAccount(req, res, next) {
     const verificationCode = await addVerificationCode(uuid);
 
     await sendEmailRegistration(accountData.email, verificationCode);
-    await createWall(uuid);
+    await createCart(uuid);
     await createProfile(uuid);
 
     return res.status(201).send();

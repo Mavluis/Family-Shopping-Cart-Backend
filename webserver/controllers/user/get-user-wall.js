@@ -1,7 +1,7 @@
 'use strict';
 
 const PostModel = require('../../../models/post-model');
-const WallModel = require('../../../models/wall-model');
+const CartModel = require('../../../models/cart-model');
 
 /**
  * Return a collection of posts
@@ -42,7 +42,7 @@ async function getUserWall(req, res, next) {
   };
 
   try {
-    const wall = await WallModel.findOne(filter, projection).lean();
+    const wall = await CartModel.findOne(filter, projection).lean();
     if (!wall) {
       return {
         data: [],

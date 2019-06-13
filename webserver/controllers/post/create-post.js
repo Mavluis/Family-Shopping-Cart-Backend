@@ -2,7 +2,7 @@
 
 const Joi = require('joi');
 const PostModel = require('../../../models/post-model');
-const WallModel = require('../../../models/wall-model');
+const CartModel = require('../../../models/cart-model');
 
 async function validate(payload) {
   const schema = {
@@ -45,7 +45,7 @@ async function createPost(req, res, next) {
       },
     };
 
-    await WallModel.findOneAndUpdate(filter, operation);
+    await CartModel.findOneAndUpdate(filter, operation);
 
     return res.status(201).send(postCreated);
   } catch (e) {
