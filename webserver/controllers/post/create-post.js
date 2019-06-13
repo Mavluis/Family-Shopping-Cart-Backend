@@ -25,10 +25,7 @@ async function createPost(req, res, next) {
 
   const data = {
     owner: uuid,
-    author: uuid,
-    content: postData.content,
-    likes: [],
-    comments: [],
+    id: uuid,
     deletedAt: null,
   };
 

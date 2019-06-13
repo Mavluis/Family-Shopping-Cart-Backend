@@ -1,10 +1,10 @@
 'use strict';
 
-const mysqlPool = require('./databases/mysql-pool');
+const mysql = require('mysql2');
 
-const { Schema } = mysqlPool;
+const { Schema } = mysql;
 
-const postSchema = new Schema({
+/* const postSchema = new Schema({
   id: String,
   notes: String,
   createdAt: {
@@ -14,6 +14,6 @@ const postSchema = new Schema({
   deletedAt: Date,
 });
 
-const Post = mysqlPool.model('Post', postSchema);
+const Post = mysql.model('Post', postSchema);
 
-module.exports = Post;
+module.exports = Post; */

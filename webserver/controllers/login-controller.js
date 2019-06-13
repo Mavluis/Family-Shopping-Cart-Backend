@@ -3,7 +3,7 @@
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');
-const mysqlPool = require('../../databases/mysql-pool');
+const mysql = require('mysql2');
 
 async function validateData(payload) {
   const schema = {
@@ -29,7 +29,7 @@ async function login(req, res, next) {
    * Check si existe el usuario en la bbdd
    */
   try {
-    const connection = await mysqlPool.getConnection();
+    const connection = await mysql.getConnection();
     const sqlQuery = `SELECT
     id, uuid, email, password, activated_at
     FROM users
@@ -39,36 +39,19 @@ async function login(req, res, next) {
     const [result] = await connection.query(sqlQuery);
     if (result.length === 1) {
       const userData = result[0];
-      /*
-      userData es esto:
-      {
-  id: 66,
-  uuid: 'fb66233b-23b4-46ad-bdf3-51e65dbb2f8e',
-  email: 'josetest@yopmail.com',
-  password:
-   '$2b$10$lW7xAAZSs2TnaX7Ua.7LGOa4bHpBQ53ig2TWRdS.EMB8XihVcckrO',
-  activated_at: 2019-03-01T19:00:57.000Z 
-}
-  */
+
       if (!userData.activated_at) {
         return res.status(403).send();
       }
 
-      /**
-       * Paso3: La clave es valida?
-       */
       const laPasswordEstaOk = await bcrypt.compare(accountData.password, userData.password);
       if (laPasswordEstaOk === false) { // !laPasswordEstaOk
         return res.status(401).send();
       }
 
-      /**
-       * Paso 4: Generar token JWT con uuid + role (admin) asociado al token
-       * La duración del token es de 1 minuto (podria ir en variable de entorno)
-       */
       const payloadJwt = {
         uuid: userData.uuid,
-        role: 'admin', // userData.role si viene de bbdd
+        role: 'admin',
       };
 
       const jwtTokenExpiration = parseInt(process.env.AUTH_ACCESS_TOKEN_TTL, 10);

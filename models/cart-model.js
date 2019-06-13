@@ -1,17 +1,17 @@
 'use strict';
 
-const mysqlPool = require('./databases/mysql-pool');
+const mysql = require('mysql2');
 
-const { Schema } = mysqlPool;
+const { Schema } = mysql;
 
-const cartSchema = new Schema({
+/* const cartSchema = new Schema({
   uuid: {
     type: String,
     unique: true,
   },
-  posts: [Schema.ObjectId],
-});
+  posts: [],
+}); */
 
-const Cart = mysqlPool.model('Cart', cartSchema);
+/* const Cart = mysql.model('Cart', cartSchema); */
 
-module.exports = Cart;
+/* module.exports = Cart; */
