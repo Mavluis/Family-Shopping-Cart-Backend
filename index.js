@@ -6,7 +6,6 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const routers = require('./webserver/routes');
 const mysqlPool = require('./databases/mysql-pool');
-const mongoPool = require('./databases/mongo-pool');
 
 const app = express();
 app.use(bodyParser.json());
@@ -26,7 +25,6 @@ process.on('unhandledRejection', (err) => {
 async function init() {
   try {
     await mysqlPool.connect();
-    await mongoPool.connect();
   } catch (e) {
     console.error(e);
     process.exit(1);
