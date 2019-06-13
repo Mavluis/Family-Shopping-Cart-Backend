@@ -5,14 +5,8 @@ const mysqlPool = require('./databases/mysql-pool');
 const { Schema } = mysqlPool;
 
 const postSchema = new Schema({
-  author: String,
-  content: String,
-  likes: [String],
-  comments: [{
-    message: String,
-    createdAt: Date,
-    author: String,
-  }],
+  id: String,
+  notes: String,
   createdAt: {
     type: Date,
     default: Date.now,

@@ -6,7 +6,6 @@ const uuidV4 = require('uuid/v4');
 const sendgridMail = require('@sendgrid/mail');
 const mysqlPool = require('../../databases/mysql-pool');
 const CartModel = require('../../models/cart-model');
-const UserModel = require('../../models/user-model');
 
 sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -55,7 +54,7 @@ async function createProfile(uuid) {
     },
   };
 
-  const profileCreated = await UserModel.create(userProfileData);
+  const profileCreated = await CartModel.create(userProfileData);
 
   return profileCreated;
 }

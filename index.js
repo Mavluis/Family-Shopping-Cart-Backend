@@ -12,7 +12,6 @@ app.use(bodyParser.json());
 
 app.use('/api', routers.accountRouter);
 app.use('/api', routers.postRouter);
-app.use('/api', routers.userRouter);
 
 process.on('uncaughtException', (err) => {
   console.error('excepción inesperada', err.message, err);
