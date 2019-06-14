@@ -10,7 +10,7 @@ const userSchema = new Schema({
     unique: true,
   },
   fullName: String,
-  preferences: {
+  idproducts: {
     isPublicProfile: Boolean,
     linkedIn: String,
     twitter: String,
