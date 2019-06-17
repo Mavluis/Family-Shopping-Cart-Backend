@@ -4,14 +4,21 @@ const mysql = require('mysql2');
 
 const { Schema } = mysql;
 
-const cartSchema = new Schema({
+const userSchema = new Schema({
   uuid: {
     type: String,
     unique: true,
   },
-  posts: [],
+  fullName: String,
+  id: Boolean,
 });
 
-const Cart = mysql.model('Cart', cartSchema);
+userSchema.index(
+  {
+    fullName: 'text',
+  },
+);
 
-module.exports = Cart;
+const User = mysql.model('User', userSchema);
+
+module.exports = User;

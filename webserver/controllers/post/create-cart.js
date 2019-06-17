@@ -1,7 +1,6 @@
 'use strict';
 
 const Joi = require('joi');
-const PostModel = require('../../../models/post-model');
 const CartModel = require('../../../models/cart-model');
 
 async function validate(payload) {
@@ -12,7 +11,7 @@ async function validate(payload) {
   return Joi.validate(payload, schema);
 }
 
-async function createPost(req, res, next) {
+async function createCart(req, res, next) {
   const postData = { ...req.body };
   const { claims } = req;
   const { uuid } = claims;
@@ -30,7 +29,7 @@ async function createPost(req, res, next) {
   };
 
   try {
-    const postCreated = await PostModel.create(data);
+    const cartCreated = await CartModel.create(data);
     // 
     const filter = {
       uuid,
@@ -38,16 +37,16 @@ async function createPost(req, res, next) {
 
     const operation = {
       $addToSet: {
-        posts: postCreated._id,
+        posts: cartCreated._id,
       },
     };
 
     await CartModel.findOneAndUpdate(filter, operation);
 
-    return res.status(201).send(postCreated);
+    return res.status(201).send(cartCreated);
   } catch (e) {
     res.status(500).send(e.message);
   }
 }
 
-module.exports = createPost;
+module.exports = createCart;

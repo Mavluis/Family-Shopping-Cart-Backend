@@ -1,9 +1,9 @@
 'use strict';
 
 const accountRouter = require('./account-router');
-const postRouter = require('./post-router');
+const cartRouter = require('./cart-router');
 
 module.exports = {
   accountRouter,
-  postRouter,
+  cartRouter,
 };
