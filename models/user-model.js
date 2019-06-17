@@ -10,13 +10,7 @@ const userSchema = new Schema({
     unique: true,
   },
   fullName: String,
-  idproducts: {
-    isPublicProfile: Boolean,
-    linkedIn: String,
-    twitter: String,
-    github: String,
-    description: String,
-  },
+  id: Boolean,
 });
 
 userSchema.index(

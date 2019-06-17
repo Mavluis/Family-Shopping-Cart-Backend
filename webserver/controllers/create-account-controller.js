@@ -36,15 +36,12 @@ async function createCart(uuid) {
 async function createProfile(uuid) {
   const userProfileData = {
     uuid,
-    avatarUrl: null,
     fullName: null,
-    friends: [],
     preferences: {
-      isPublicProfile: false,
-      linkedIn: null,
-      twitter: null,
-      github: null,
-      description: null,
+      password: null,
+      newpassword: null,
+      repeatnewpass: null,
+      regularlist: null,
     },
   };
 
