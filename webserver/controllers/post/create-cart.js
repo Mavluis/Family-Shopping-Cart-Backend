@@ -1,7 +1,7 @@
 'use strict';
 
 const Joi = require('joi');
-const CartModel = require('../../../models/cart-model');
+const Cart = require('../../../databases/mysql-pool');
 
 async function validate(payload) {
   const schema = {
@@ -29,7 +29,7 @@ async function createCart(req, res, next) {
   };
 
   try {
-    const cartCreated = await CartModel.create(data);
+    const cartCreated = await Cart.create(data);
     // 
     const filter = {
       uuid,
@@ -41,7 +41,7 @@ async function createCart(req, res, next) {
       },
     };
 
-    await CartModel.findOneAndUpdate(filter, operation);
+    await Cart.findOneAndUpdate(filter, operation);
 
     return res.status(201).send(cartCreated);
   } catch (e) {

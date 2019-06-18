@@ -14,7 +14,6 @@ async function connect() {
     multipleStatements: true,
   };
 
-  /* Create bbdd MySql */
   const pool = mysql.createPool(options);
   this.pool = pool.promise();
 

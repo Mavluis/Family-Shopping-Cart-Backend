@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const routers = require('./webserver/routes');
 const mysqlPool = require('./databases/mysql-pool');
-
+const printUsers = require("./databases/deleteme")
 const app = express();
 
 /**
@@ -58,6 +58,7 @@ process.on('unhandledRejection', (err) => {
 async function init() {
   try {
     await mysqlPool.connect();
+    await printUsers()
   } catch (e) {
     console.error(e);
     process.exit(1);

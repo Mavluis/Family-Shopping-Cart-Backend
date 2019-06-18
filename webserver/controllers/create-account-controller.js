@@ -5,30 +5,30 @@ const Joi = require('joi');
 const uuidV4 = require('uuid/v4');
 const sendgridMail = require('@sendgrid/mail');
 const mysql = require('mysql2');
-const CartModel = require('../../models/cart-model');
+const Cart = require('../../databases/users');
 
 sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-async function validateSchema(payload) {
+async function validate(payload) {
 
-  const schema = {
+  const validation = {
     email: Joi.string().email({ minDomainAtoms: 2 }).required(),
     password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/).required(),
   };
 
-  return Joi.validate(payload, schema);
+  return Joi.validate(payload, validation);
 }
 
 /**
 Create users cart
  */
-async function createCart(uuid) {
+async function createCart(uuid, cart) {
   const data = {
     uuid,
-    posts: [],
+    cart: [],
   };
 
-  const cart = await CartModel.create(data);
+  const cart = await Cart.create(data);
 
   return cart;
 }
@@ -45,7 +45,7 @@ async function createProfile(uuid) {
     },
   };
 
-  const profileCreated = await CartModel.create(userProfileData);
+  const profileCreated = await Cart.create(userProfileData);
 
   return profileCreated;
 }
@@ -93,10 +93,10 @@ async function sendEmailRegistration(userEmail, verificationCode) {
 }
 
 async function createAccount(req, res, next) {
-  const accountData = req.body;
+  const accountData = req.query;
 
   try {
-    await validateSchema(accountData);
+    await validate(accountData);
   } catch (e) {
     return res.status(400).send(e);
   }
@@ -119,7 +119,7 @@ async function createAccount(req, res, next) {
 
   try {
     const resultado = await connection.query(sqlInsercion, {
-      uuid, // uuid: uuid,
+      uuid,
       email: accountData.email,
       password: securePassword,
       created_at: createdAt,

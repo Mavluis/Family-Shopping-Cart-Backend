@@ -15,19 +15,15 @@ async function validateData(payload) {
 }
 
 async function login(req, res, next) {
-  /**
-   * Validar datos de entrada con Joi
-   */
+
   const accountData = { ...req.body };
+  
   try {
     await validateData(accountData);
   } catch (e) {
     return res.status(400).send(e);
   }
 
-  /**
-   * Check si existe el usuario en la bbdd
-   */
   try {
     const connection = await mysql.getConnection();
     const sqlQuery = `SELECT
@@ -35,7 +31,6 @@ async function login(req, res, next) {
     FROM users
     WHERE email = '${accountData.email}'`;
 
-    // const result = connecgtion.query(sqlQuery)[0]
     const [result] = await connection.query(sqlQuery);
     if (result.length === 1) {
       const userData = result[0];
@@ -45,7 +40,7 @@ async function login(req, res, next) {
       }
 
       const laPasswordEstaOk = await bcrypt.compare(accountData.password, userData.password);
-      if (laPasswordEstaOk === false) { // !laPasswordEstaOk
+      if (laPasswordEstaOk === false) {
         return res.status(401).send();
       }
 
