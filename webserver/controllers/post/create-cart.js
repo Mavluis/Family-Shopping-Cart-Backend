@@ -1,7 +1,7 @@
 'use strict';
 
 const Joi = require('joi');
-const Cart = require('../../../databases/mysql-pool');
+const Cart = require('../carts');
 
 async function validate(payload) {
   const schema = {

@@ -5,7 +5,7 @@ const Joi = require('joi');
 const uuidV4 = require('uuid/v4');
 const sendgridMail = require('@sendgrid/mail');
 const mysql = require('mysql2');
-const Cart = require('../../databases/users');
+const Cart = require('../controllers/post/create-cart');
 
 sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -19,10 +19,7 @@ async function validate(payload) {
   return Joi.validate(payload, validation);
 }
 
-/**
-Create users cart
- */
-async function createCart(uuid, cart) {
+async function createCart(uuid) {
   const data = {
     uuid,
     cart: [],
@@ -50,12 +47,6 @@ async function createProfile(uuid) {
   return profileCreated;
 }
 
-/**
- * Crea un codigo de verificacion para el usuario dado e inserta este codigo
- * en la base de datos
- * @param {String} uuid
- * @return {String} verificationCode
- */
 async function addVerificationCode(uuid) {
   const verificationCode = uuidV4();
   const now = new Date();
@@ -101,13 +92,6 @@ async function createAccount(req, res, next) {
     return res.status(400).send(e);
   }
 
-  /**
-   * Tenemos que insertar el usuario en la bbdd, para ello:
-   * 1. Generamos un uuid v4
-   * 2. Miramos la fecha actual created_at
-   * 3. Calculamos hash de la password que nos mandan para almacenarla
-   * de forma segura en la base de datos
-   */
   const now = new Date();
   const securePassword = await bcrypt.hash(accountData.password, 10);
   const uuid = uuidV4();
