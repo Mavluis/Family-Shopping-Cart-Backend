@@ -4,18 +4,17 @@ const bcrypt = require('bcrypt');
 const Joi = require('joi');
 const uuidV4 = require('uuid/v4');
 const sendgridMail = require('@sendgrid/mail');
-const mysql = require('mysql2');
+const mysql = require('../../databases/mysql-pool');
 const Cart = require('../controllers/post/create-cart');
 
 sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 async function validate(payload) {
-
   const validation = {
     email: Joi.string().email({ minDomainAtoms: 2 }).required(),
     password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/).required(),
+    fullName: Joi.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9 ]*$/).required()
   };
-
   return Joi.validate(payload, validation);
 }
 
@@ -74,8 +73,8 @@ async function sendEmailRegistration(userEmail, verificationCode) {
       name: 'Family Shopping Cart',
     },
     subject: 'Welcome to Family Shopping Cart',
-    text: 'Don`t ever forget any product in the supermarket.',
-    html: `To confirm the account <a href="${linkActivacion}">activate it here</a>`,
+    html: `Don't ever forget any product in the supermarket. <br> <br>
+    To confirm the account <a href="${linkActivacion}">CLICK HERE TO ACTIVATE</a>`,
   };
 
   const data = await sendgridMail.send(msg);
@@ -84,8 +83,7 @@ async function sendEmailRegistration(userEmail, verificationCode) {
 }
 
 async function createAccount(req, res, next) {
-  const accountData = req.query;
-
+  const accountData = req.body;
   try {
     await validate(accountData);
   } catch (e) {

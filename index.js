@@ -8,6 +8,8 @@ const routers = require('./webserver/routes');
 const mysqlPool = require('./databases/mysql-pool');
 const app = express();
 
+app.use(bodyParser.json());
+
 /**
  *  CORS configuration
  */
@@ -40,8 +42,6 @@ app.use((req, res, next) => {
   res.header('Access-Control-Expose-Headers', accessControlAllowHeaders.join(','));
   next();
 });
-
-app.use(bodyParser.json());
 
 app.use('/api', routers.accountRouter);
 app.use('/api', routers.cartRouter);

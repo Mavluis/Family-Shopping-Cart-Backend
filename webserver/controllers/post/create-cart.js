@@ -12,12 +12,12 @@ async function validate(payload) {
 }
 
 async function createCart(req, res, next) {
-  const postData = { ...req.body };
+  const accountData = { ...req.body };
   const { claims } = req;
   const { uuid } = claims;
 
   try {
-    await validate(postData);
+    await validate(accountData);
   } catch (e) {
     return res.status(400).send(e);
   }

@@ -3,7 +3,7 @@
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');
-const mysql = require('mysql2');
+const mysql = require('../../databases/mysql-pool');
 
 async function validateData(payload) {
   const schema = {
@@ -27,7 +27,7 @@ async function login(req, res, next) {
   try {
     const connection = await mysql.getConnection();
     const sqlQuery = `SELECT
-    id, uuid, email, password, activated_at
+    uuid, email, password, activated_at
     FROM users
     WHERE email = '${accountData.email}'`;
 
