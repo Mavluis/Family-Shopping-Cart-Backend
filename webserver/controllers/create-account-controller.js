@@ -5,7 +5,7 @@ const Joi = require('joi');
 const uuidV4 = require('uuid/v4');
 const sendgridMail = require('@sendgrid/mail');
 const mysql = require('../../databases/mysql-pool');
-const Cart = require('../controllers/post/create-cart');
+/* const Cart = require('../controllers/post/create-cart'); */
 
 sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -20,8 +20,10 @@ async function validate(payload) {
 
 async function createCart(uuid) {
   const data = {
-    uuid,
-    cart: [],
+    user_id: uuid,
+    note: string,
+    cart_id: string,
+    created_at: createdAt
   };
 
   const cart = await Cart.create(data);

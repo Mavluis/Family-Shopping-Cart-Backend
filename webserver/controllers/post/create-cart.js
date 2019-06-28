@@ -4,45 +4,43 @@ const Joi = require('joi');
 const Cart = require('../carts');
 
 async function validate(payload) {
-  const schema = {
+  const joi = {
     content: Joi.string().min(5).max(1024).required(),
   };
-
-  return Joi.validate(payload, schema);
+  
+  return Joi.validate(payload, joi);
 }
 
 async function createCart(req, res, next) {
-  const accountData = { ...req.body };
-  const { claims } = req;
-  const { uuid } = claims;
-
+  const accountData = req.body;
+  console.log(accountData)
+  const sqlQuery = 'INSERT INTO carts SET ?';
+  const connection = await mysql.getConnection();
+  await connection.query(sqlQuery, {
+    user_id: uuid,
+    note: string,
+    cart_id: string,
+    created_at: createdAt,
+  });
+  
+  connection.release();
+  
   try {
     await validate(accountData);
   } catch (e) {
     return res.status(400).send(e);
   }
-
+  
   const data = {
-    owner: uuid,
-    id: uuid,
-    deletedAt: null,
+    user_id: uuid,
+    note: string,
+    cart_id: string,
+    created_at: createdAt,
   };
-
+  
   try {
     const cartCreated = await Cart.create(data);
-    // 
-    const filter = {
-      uuid,
-    };
-
-    const operation = {
-      $addToSet: {
-        posts: cartCreated._id,
-      },
-    };
-
-    await Cart.findOneAndUpdate(filter, operation);
-
+    console.log(cartCreated)
     return res.status(201).send(cartCreated);
   } catch (e) {
     res.status(500).send(e.message);
