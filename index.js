@@ -8,8 +8,6 @@ const routers = require('./webserver/routes');
 const mysqlPool = require('./databases/mysql-pool');
 const app = express();
 
-app.use(bodyParser.json());
-
 /**
  *  CORS configuration
  */
@@ -24,7 +22,7 @@ app.use((req, res, next) => {
     'PUT',
     'OPTIONS',
   ];
-
+  
   const accessControlAllowHeaders = [
     'Origin',
     'X-Requested-With',
@@ -34,7 +32,7 @@ app.use((req, res, next) => {
     'Authorization',
     'Location',
   ];
-
+  
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Methods', accessControlAllowMethods.join(','));
@@ -42,6 +40,8 @@ app.use((req, res, next) => {
   res.header('Access-Control-Expose-Headers', accessControlAllowHeaders.join(','));
   next();
 });
+
+app.use(bodyParser.json());
 
 app.use('/api', routers.accountRouter);
 app.use('/api', routers.cartRouter);

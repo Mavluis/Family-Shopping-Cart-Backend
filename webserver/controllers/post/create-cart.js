@@ -1,47 +1,44 @@
 'use strict';
 
-const Joi = require('joi');
-const Cart = require('../carts');
-
-async function validate(payload) {
-  const joi = {
-    content: Joi.string().min(5).max(1024).required(),
-  };
-  
-  return Joi.validate(payload, joi);
-}
+const mysql = require('../../../databases/mysql-pool');
 
 async function createCart(req, res, next) {
-  const accountData = req.body;
-  console.log(accountData)
+
+  // 1: Take request data
+  const requestData = { ...req.body };
+  const note = requestData.note;
+
+  // 2: Take the user ID from previews middleware
+  const { uuid } = req.claims;
+  console.log({ requestData, uuid, note })
+
+  // 3: Generate necessary data
+  const cart_id = 123. // Generate UUID
+  const created_at = new Date() // Generate UUID
+
+  // 4: Insert into DB
   const sqlQuery = 'INSERT INTO carts SET ?';
   const connection = await mysql.getConnection();
-  await connection.query(sqlQuery, {
-    user_id: uuid,
-    note: string,
-    cart_id: string,
-    created_at: createdAt,
-  });
-  
-  connection.release();
-  
+
+
   try {
-    await validate(accountData);
+    await connection.query(sqlQuery, {
+      note,
+      cart_id,
+      created_at,
+      user_id: uuid,
+    });
+
+    connection.release();
+    return res.status(201).send();
   } catch (e) {
     return res.status(400).send(e);
   }
-  
-  const data = {
-    user_id: uuid,
-    note: string,
-    cart_id: string,
-    created_at: createdAt,
-  };
-  
+
+
+
   try {
-    const cartCreated = await Cart.create(data);
-    console.log(cartCreated)
-    return res.status(201).send(cartCreated);
+    return res.status(201).send();
   } catch (e) {
     res.status(500).send(e.message);
   }

@@ -6,6 +6,6 @@ const createCart = require('../controllers/post/create-cart');
 
 const router = express.Router();
 
-router.post('/post', checkJwtToken, createCart);
+router.post('/create-cart', checkJwtToken, createCart);
 
 module.exports = router;
