@@ -18,6 +18,9 @@ async function validate(payload) {
   return Joi.validate(payload, validation);
 }
 
+const now = new Date();
+const createdAt = now.toISOString().substring(0, 19).replace('T', ' ');
+
 async function createCart(uuid) {
   const data = {
     user_id: uuid,

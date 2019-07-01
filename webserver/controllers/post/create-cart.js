@@ -1,6 +1,7 @@
 'use strict';
 
 const mysql = require('../../../databases/mysql-pool');
+const uuidV4 = require('uuid/v4');
 
 async function createCart(req, res, next) {
 
@@ -10,16 +11,15 @@ async function createCart(req, res, next) {
 
   // 2: Take the user ID from previews middleware
   const { uuid } = req.claims;
-  console.log({ requestData, uuid, note })
-
+  
   // 3: Generate necessary data
-  const cart_id = 123. // Generate UUID
-  const created_at = new Date() // Generate UUID
-
+  const cart_id = uuidV4();
+  const created_at = new Date()
+  
+  console.log({ requestData, uuid, note, cart_id })
   // 4: Insert into DB
   const sqlQuery = 'INSERT INTO carts SET ?';
   const connection = await mysql.getConnection();
-
 
   try {
     await connection.query(sqlQuery, {
@@ -37,6 +37,8 @@ async function createCart(req, res, next) {
 
 
 
+
+  
   try {
     return res.status(201).send();
   } catch (e) {
