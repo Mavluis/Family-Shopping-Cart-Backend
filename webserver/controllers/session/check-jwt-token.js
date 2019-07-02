@@ -6,7 +6,6 @@ const { AUTH_JWT_SECRET: authJwtSecret } = process.env;
 
 function checkJwtToken(req, res, next) {
   const { authorization } = req.headers;
-  debugger;
   if (!authorization) {
     return res.status(401).send();
   }
