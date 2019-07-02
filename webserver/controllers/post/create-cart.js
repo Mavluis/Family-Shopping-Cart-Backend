@@ -5,6 +5,8 @@ const uuidV4 = require('uuid/v4');
 
 const cart_id = uuidV4();
 
+/* Create a Cart by login */
+
 async function createCart(req, res, next) {
 
   const requestData = { ...req.body };
@@ -31,6 +33,8 @@ async function createCart(req, res, next) {
 
 const product_id = uuidV4();
 
+/* Create a product Cart by login */
+
 async function createcartProducts(req, res, next) {
 
   const requestData = { ...req.body };
@@ -49,19 +53,20 @@ async function createcartProducts(req, res, next) {
     });
     
     connection.release();
+    next();
     return res.status(201).send();
   } catch (e) {
     return res.status(400).send(e);
   }
 }
 
+/* Create a list of products and their names from a login */
+
 async function createProducts(req, res, next) {
   
-  console.log("System Failure!!!");
   const requestData = { ...req.body };
   const name = requestData.name;
   const created_at = new Date();
-  
   const sqlQuery = 'INSERT INTO products SET ?';
   const connection = await mysql.getConnection();
   
