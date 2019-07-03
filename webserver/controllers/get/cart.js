@@ -1,19 +1,26 @@
 'use strict';
 
+console.log("System Failure!!!");
 const mysql = require('../../../databases/mysql-pool');
 
-const sqlQuery = 'SELECT uuid.users, user_id.carts, amount.cart_products, name.products from users, carts, cart_products, products';
+async function Cart(req, res, next) {
 
-const connection = await mysql.getConnection();
+    const sqlQuery = 'SELECT uuid.users, user_id.carts, amount.cart_products, name.products from users, carts, cart_products, products';
+    const connection = await mysql.getConnection();
 
-connection.query(sqlQuery, {
-    note,
-    name,
-    amount,
-    cart_id,
-    user_id: uuid
-});
+    try {
+        await connection.query(sqlQuery, {
+            note,
+            name,
+            amount,
+            cart_id,
+            user_id: uuid
+        });
+        connection.release();
+        return res.status(201).send();
+    } catch (e) {
+        return res.status(400).send(e);
+    }
+}
 
-connection.release();
-
-console.log("System Failure!!!");
+module.exports = { Cart };
