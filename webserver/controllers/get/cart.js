@@ -15,7 +15,6 @@ async function Cart(req, res, next) {
         await connection.query(sqlQuery, {
             note,
             name,
-            amount,
             cart_id,
             user_id: uuid
         });

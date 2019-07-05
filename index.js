@@ -7,6 +7,7 @@ const express = require('express');
 const routers = require('./webserver/routes');
 const mysqlPool = require('./databases/mysql-pool');
 const app = express();
+const { createProducts } = require('./webserver/fixture/loader');
 
 /**
  *  CORS configuration
@@ -22,7 +23,7 @@ app.use((req, res, next) => {
     'PUT',
     'OPTIONS',
   ];
-  
+
   const accessControlAllowHeaders = [
     'Origin',
     'X-Requested-With',
@@ -32,7 +33,7 @@ app.use((req, res, next) => {
     'Authorization',
     'Location',
   ];
-  
+
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Methods', accessControlAllowMethods.join(','));
@@ -57,6 +58,9 @@ process.on('unhandledRejection', (err) => {
 async function init() {
   try {
     await mysqlPool.connect();
+    if (process.env.RUN_FIXTURE === "true") {
+    await createProducts(['kiwi']);
+    }
   } catch (e) {
     console.error(e);
     process.exit(1);
