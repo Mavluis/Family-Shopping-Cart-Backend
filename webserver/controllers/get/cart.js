@@ -3,25 +3,26 @@
 const mysql = require('../../../databases/mysql-pool');
 
 async function Cart(req, res, next) {
-    
-    const accountData = { ...req.body };
-    const sqlQuery = `SELECT 
-    uuid.users, user_id.carts, amount.cart_products, 
-    name.products from users, carts, cart_products, 
-    products WHERE email = '${accountData.email}'`;
-    const connection = await mysql.getConnection();
-    
+
     try {
-        await connection.query(sqlQuery, {
-            note,
-            name,
-            cart_id,
-            user_id: uuid
-        });
+        const connection = await mysql.getConnection();
+        const sqlQuery = `SELECT cart_id, name FROM cart_products 
+            INNER JOIN products ON cart_products.product_id = 
+            products.product_id`;
+        const [result] = await connection.query(sqlQuery);
+
+        const sqlQuery1 = `SELECT user_id, note FROM carts INNER JOIN 
+            users ON carts.user_id = users.uuid`;
+        const [result1] = await connection.query(sqlQuery1);
+
+        console.log(result);
+        console.log(result1);
+
+        console.log("System Failure!!!");
+
         connection.release();
         return res.status(201).send();
     } catch (e) {
-        console.log("System Failure!!!");
         return res.status(400).send(e);
     }
 }

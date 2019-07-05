@@ -3,6 +3,9 @@
 const mysql = require('../../databases/mysql-pool');
 const uuidV4 = require('uuid/v4');
 
+/* Creates all products in the Products table the first time 
+the server is started and assigns a product_id to each product. */
+
 async function createProduct(name) {
 
     const created_at = new Date();

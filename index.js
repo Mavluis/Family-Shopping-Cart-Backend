@@ -1,4 +1,3 @@
-
 'use strict';
 
 require('dotenv').config();
@@ -58,8 +57,51 @@ process.on('unhandledRejection', (err) => {
 async function init() {
   try {
     await mysqlPool.connect();
+
+    /* Creates all products in the Products table the first 
+    time the server is started and assigns a product_id to each product. */
+
     if (process.env.RUN_FIXTURE === "true") {
-    await createProducts(['kiwi']);
+    await createProducts(['Beer', 
+      'Biscuits', 
+      'Cereals', 
+      'Chips', 
+      'Fruit', 
+      'Milk', 
+      'Potatoes', 
+      'TomatoBrick', 
+      'Water', 
+      'Yogourt', 
+      'Butter', 
+      'ColdCuts', 
+      'Eggs', 
+      'Eggplant', 
+      'Macaroni', 
+      'Mushrooms', 
+      'Olives', 
+      'Sausages', 
+      'Spaghetti', 
+      'Squash', 
+      'Apples', 
+      'Celery', 
+      'CleaningSupplies', 
+      'Melon', 
+      'Onions', 
+      'ParchmentPaper', 
+      'Pears', 
+      'Pizza', 
+      'Strawberries', 
+      'Zucchini', 
+      'Bananas', 
+      'BottledWater', 
+      'Cherry', 
+      'Coffee', 
+      'Deodorant', 
+      'GlassCleaner', 
+      'OrangeJuice', 
+      'RedWine', 
+      'ToiletPaper', 
+      'Watermelon']);
     }
   } catch (e) {
     console.error(e);

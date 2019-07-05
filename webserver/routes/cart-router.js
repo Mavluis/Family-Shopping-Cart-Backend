@@ -8,6 +8,6 @@ const { Cart } = require('../controllers/get/cart');
 const router = express.Router();
 
 router.post('/create-cart', checkJwtToken, createCart, createcartProducts);
-router.get('/cart', Cart);
+router.get('/cart', Cart, checkJwtToken);
 
 module.exports = router;
