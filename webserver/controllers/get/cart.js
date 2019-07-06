@@ -4,21 +4,31 @@ const mysql = require('../../../databases/mysql-pool');
 
 async function Cart(req, res, next) {
 
+    const accountData = { ...req.body };
+    console.log(accountData);
     try {
-
         const connection = await mysql.getConnection();
-        const sqlQuery = `SELECT name FROM cart_products 
-        INNER JOIN products ON cart_products.product_id = 
-        products.product_id WHERE cart_id = '6850cccb-df85-4bd4-83ba-f15f087e5431'`;
-        const [result] = await connection.query(sqlQuery);
+        const sqlQueryUser = `SELECT uuid FROM users 
+        WHERE email = '${accountData.email}'`;
+        const [uuid] = await connection.query(sqlQueryUser);
+        console.log(uuid);
 
-        const sqlQuery1 = `SELECT note FROM carts 
-        WHERE user_id = '4debe0f9-4835-46c8-bd10-a056d5859409'`;
-        const [result1] = await connection.query(sqlQuery1);
-        
-        console.log(result);
-        console.log(result1);
-        
+        const userId = [uuid];
+        console.log(userId);
+
+        const sqlQueryNote = `SELECT note FROM carts 
+            WHERE cart_id = '${userId}'`;
+        const [note] = await connection.query(sqlQueryNote);
+        console.log(note);
+
+        const sqlQueryName = `SELECT name FROM cart_products 
+            INNER JOIN products ON cart_products.product_id = 
+            products.product_id WHERE cart_id = '${userId}'`;
+        const [name] = await connection.query(sqlQueryName);
+
+        const cartProducts = name.concat(note);
+        console.log(cartProducts);
+
         connection.release();
         return res.status(201).send();
     } catch (e) {
