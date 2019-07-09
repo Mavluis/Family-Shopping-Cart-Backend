@@ -32,7 +32,6 @@ async function Cart(req, res, next) {
         return res.status(201).send();
     } catch (e) {
         return res.status(400).send(e);
-        console.log("System Failure!!!");
     }
 }
 

@@ -98,6 +98,7 @@ async function createAccount(req, res, next) {
   const now = new Date();
   const securePassword = await bcrypt.hash(accountData.password, 10);
   const uuid = uuidV4();
+  const fullName = accountData.fullName;
   const createdAt = now.toISOString().substring(0, 19).replace('T', ' ');
 
   const connection = await mysql.getConnection();
@@ -107,6 +108,7 @@ async function createAccount(req, res, next) {
   try {
     const resultado = await connection.query(sqlInsercion, {
       uuid,
+      fullName,
       email: accountData.email,
       password: securePassword,
       created_at: createdAt,
