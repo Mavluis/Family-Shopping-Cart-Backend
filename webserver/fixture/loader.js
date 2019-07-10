@@ -21,17 +21,10 @@ async function createProduct(name) {
         });
 
         connection.release();
-    } catch (e) {
-        console.log(e.message);
-    }
+    } catch (e) { }
 }
 
-/**
- * 
- * @param {[string]} names 
- */
 async function createProducts(names) {
-    // names.forEach(name => createProduct(name)); // lo mismo
     names.forEach(createProduct);
 }
 

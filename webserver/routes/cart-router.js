@@ -9,7 +9,7 @@ const { User } = require('../controllers/get/user');
 const router = express.Router();
 
 router.post('/create-cart', checkJwtToken, createCart, createcartProducts);
-router.get('/cart', Cart, checkJwtToken);
-router.get('/user', User, checkJwtToken);
+router.get('/cart', checkJwtToken, Cart);
+router.get('/user', checkJwtToken, User);
 
 module.exports = router;

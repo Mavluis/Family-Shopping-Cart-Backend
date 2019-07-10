@@ -4,19 +4,16 @@ const mysql = require('../../../databases/mysql-pool');
 
 async function User(req, res, next) {
 
-    const requestData = { ...req.body };
-    console.log(requestData);
+    const { uuid } = req.claims;
 
     try {
         const connection = await mysql.getConnection();
-        const sqlQuery = `SELECT note FROM users 
-        INNER JOIN carts ON users.uuid = carts.user_id 
-        WHERE email = '${accountData.email}' 
-        ORDER BY carts.created_at DESC LIMIT 1`;
-        const [note] = await connection.query(sqlQuery);
+        const sqlQuery = `SELECT fullName FROM users  
+        WHERE uuid = '${uuid}'`;
+        const [fullName] = await connection.query(sqlQuery);
 
         connection.release();
-        return res.status(201).send();
+        return res.status(201).send(fullName);
     } catch (e) {
         return res.status(400).send(e);
     }
