@@ -13,7 +13,7 @@ async function User(req, res, next) {
         const [fullName] = await connection.query(sqlQuery);
 
         connection.release();
-        return res.status(201).send(fullName);
+        return res.status(201).send(fullName[0]);
     } catch (e) {
         return res.status(400).send(e);
     }

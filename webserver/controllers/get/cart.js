@@ -2,6 +2,8 @@
 
 const mysql = require('../../../databases/mysql-pool');
 
+/* Returns the products and notes of the user who is logged in. */
+
 async function Cart(req, res, next) {
 
     const { uuid } = req.claims;
