@@ -12,7 +12,7 @@ const { createProducts } = require('./webserver/fixture/loader');
  *  CORS configuration
  */
 
-/* app.use((req, res, next) => {
+app.use((req, res, next) => {
   const accessControlAllowMethods = [
     'GET',
     'POST',
@@ -39,7 +39,7 @@ const { createProducts } = require('./webserver/fixture/loader');
   res.header('Access-Control-Allow-Headers', accessControlAllowHeaders.join(','));
   res.header('Access-Control-Expose-Headers', accessControlAllowHeaders.join(','));
   next();
-}); */
+});
 
 app.use(bodyParser.json());
 
