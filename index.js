@@ -12,7 +12,7 @@ const { createProducts } = require('./webserver/fixture/loader');
  *  CORS configuration
  */
 
-app.use((req, res, next) => {
+/* app.use((req, res, next) => {
   const accessControlAllowMethods = [
     'GET',
     'POST',
@@ -39,7 +39,7 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', accessControlAllowHeaders.join(','));
   res.header('Access-Control-Expose-Headers', accessControlAllowHeaders.join(','));
   next();
-});
+}); */
 
 app.use(bodyParser.json());
 
@@ -108,7 +108,7 @@ async function init() {
     process.exit(1);
   }
 
-  const port = 3000/* process.env.PORT */;
+  /* const port = 3000 */process.env.PORT;
   app.listen(port, () => {
     console.log(`Server running and listening on port ${port}`);
   });
