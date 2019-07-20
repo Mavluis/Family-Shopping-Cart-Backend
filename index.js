@@ -3,43 +3,14 @@
 require('dotenv').config();
 const bodyParser = require('body-parser');
 const express = require('express');
+const cors = require('cors');
 const routers = require('./webserver/routes');
 const mysqlPool = require('./databases/mysql-pool');
 const app = express();
+
 const { createProducts } = require('./webserver/fixture/loader');
 
-/**
- *  CORS configuration
- */
-
-app.use((req, res, next) => {
-  const accessControlAllowMethods = [
-    'GET',
-    'POST',
-    'DELETE',
-    'HEAD',
-    'PATCH',
-    'PUT',
-    'OPTIONS',
-  ];
-
-  const accessControlAllowHeaders = [
-    'Origin',
-    'X-Requested-With',
-    'Content-Type',
-    'Accept',
-    'Accept-Version',
-    'Authorization',
-    'Location',
-  ];
-
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Methods', accessControlAllowMethods.join(','));
-  res.header('Access-Control-Allow-Headers', accessControlAllowHeaders.join(','));
-  res.header('Access-Control-Expose-Headers', accessControlAllowHeaders.join(','));
-  next();
-});
+app.use(cors());
 
 app.use(bodyParser.json());
 
