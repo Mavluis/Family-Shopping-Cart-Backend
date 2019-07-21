@@ -2,6 +2,8 @@
 
 const mysql = require('../../../databases/mysql-pool');
 
+/* Select the fullName of the BB.DD for insertion on either side of the api. */
+
 async function User(req, res, next) {
 
     const { uuid } = req.claims;

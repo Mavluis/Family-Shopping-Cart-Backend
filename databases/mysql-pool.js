@@ -12,7 +12,6 @@ async function connect() {
     port: process.env.MYSQL_PORT,
     timezone: 'Z',
     typeCast(field, next) {
-      // https://github.com/sidorares/node-mysql2/issues/262
       if (field.type === 'DATETIME') {
         const utcTime = Math.floor((new Date(`${field.string()} UTC`)).getTime() / 1000);
         const fixedDate = new Date(0);
@@ -26,10 +25,8 @@ async function connect() {
     multipleStatements: true,
   };
 
-  /**
-   * Create connection pool and
-   * promisify it to use async / await
-   */
+  /* Create connection pool and
+  promisify it to use async / await */
 
   const pool = mysql.createPool(options);
   this.pool = pool.promise();

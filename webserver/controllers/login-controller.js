@@ -5,6 +5,10 @@ const Joi = require('joi');
 const jwt = require('jsonwebtoken');
 const mysql = require('../../databases/mysql-pool');
 
+/* Validate email and password so that it does not contain 
+strange characters, that the email is more than 2 characters after 
+the @ and the password that contains between 3 and 30 characters. */
+
 async function validateData(payload) {
   const schema = {
     email: Joi.string().email({ minDomainAtoms: 2 }).required(),
@@ -46,7 +50,7 @@ async function login(req, res, next) {
         return res.status(403).send();
       }
 
-      /* Check if the user exists in the bbdd */
+      /* Check if the user exists in the BB.DD */
 
       const laPasswordEstaOk = await bcrypt.compare(accountData.password, userData.password);
       if (laPasswordEstaOk === false) {

@@ -5,9 +5,12 @@ const Joi = require('joi');
 const uuidV4 = require('uuid/v4');
 const sendgridMail = require('@sendgrid/mail');
 const mysql = require('../../databases/mysql-pool');
-/* const Cart = require('../controllers/post/create-cart'); */
 
 sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+/* Validate fullName, email and password so that it does not contain 
+strange characters, that the email is more than 2 characters after 
+the @ and the password that contains between 3 and 30 characters. */
 
 async function validate(payload) {
   const validation = {
@@ -18,17 +21,8 @@ async function validate(payload) {
   return Joi.validate(payload, validation);
 }
 
-/* const now = new Date();
-const createdAt = now.toISOString().substring(0, 19).replace('T', ' ');
- */
-/* async function createCart(uuid) {
-  const data = {
-    user_id: uuid,
-  };
-  const cart = await Cart(data);
-
-  return cart;
-} */
+/* Inserts in the BB.DD the data of the user, user_uuid, 
+verification_code and created_at. */
 
 async function addVerificationCode(uuid) {
   const verificationCode = uuidV4();
@@ -48,9 +42,11 @@ async function addVerificationCode(uuid) {
   return verificationCode;
 }
 
+/* Send an activation link to the email so that the account is activated 
+and can already get into your Cart. */
+
 async function sendEmailRegistration(userEmail, verificationCode) {
-  const linkActivacion = `http://localhost:3000/api/account/activate?verification_code=${verificationCode}`;
-  /* const linkActivacion = `https://family-shopping-cart.herokuapp.com/api/account/activate?verification_code=${verificationCode}`; */
+  const linkActivacion = `https://family-shopping-cart.herokuapp.com/api/account/activate?verification_code=${verificationCode}`;
   const msg = {
     to: userEmail,
     from: {
@@ -59,12 +55,14 @@ async function sendEmailRegistration(userEmail, verificationCode) {
     },
     subject: 'Welcome to Family Shopping Cart',
     html: `Don't ever forget any product in the supermarket. <br> <br>
-    To confirm the account <a href="${linkActivacion}">CLICK HERE TO ACTIVATE</a>`,
+    To confirm the account <a href="${linkActivacion}">CLICK HERE TO ACTIVATE, PLEASE!!!</a>`,
   };
 
   const data = await sendgridMail.send(msg);
   return data;
 }
+
+/* Create the user account with all the necessary data in the BB.DD. */
 
 async function createAccount(req, res, next) {
   const accountData = req.body;
@@ -97,7 +95,6 @@ async function createAccount(req, res, next) {
     const verificationCode = await addVerificationCode(uuid);
 
     await sendEmailRegistration(accountData.email, verificationCode);
-    /* await createCart(uuid); */
 
     return res.status(201).send();
   } catch (e) {

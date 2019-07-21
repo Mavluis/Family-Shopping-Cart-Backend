@@ -2,6 +2,9 @@
 
 const mysqlPool = require('../../../databases/mysql-pool');
 
+/* Updates the BB.DD with the verification of the 
+email sent to you when you create the user account. */
+
 async function activate(req, res, next) {
   const { verification_code: verificationCode } = req.query;
 
@@ -39,7 +42,7 @@ AND verified_at IS NULL`;
     }
 
     connection.release();
-    return res.send('verification code invalid');
+    return res.send('Verification Code Invalid');
   } catch (e) {
     return res.status(500).send(e.message);
   }
