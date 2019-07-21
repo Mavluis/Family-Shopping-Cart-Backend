@@ -33,7 +33,7 @@ AND verified_at IS NULL`;
       const resultActivateUser = await connection.query(sqlActivateUserQuery);
       if (resultActivateUser[0].affectedRows === 1) {
         connection.release();
-        return res.send('account activated');
+        return res.send('ACCOUNT ACTIVATED!!! Now you can log in and start using your account!');
       }
 
     }

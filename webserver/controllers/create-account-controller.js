@@ -5,7 +5,7 @@ const Joi = require('joi');
 const uuidV4 = require('uuid/v4');
 const sendgridMail = require('@sendgrid/mail');
 const mysql = require('../../databases/mysql-pool');
-const Cart = require('../controllers/post/create-cart');
+/* const Cart = require('../controllers/post/create-cart'); */
 
 sendgridMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -18,38 +18,17 @@ async function validate(payload) {
   return Joi.validate(payload, validation);
 }
 
-const now = new Date();
+/* const now = new Date();
 const createdAt = now.toISOString().substring(0, 19).replace('T', ' ');
-
-async function createCart(uuid) {
+ */
+/* async function createCart(uuid) {
   const data = {
     user_id: uuid,
-    note: string,
-    cart_id: string,
-    created_at: createdAt
   };
-
-  const cart = await Cart.create(data);
+  const cart = await Cart(data);
 
   return cart;
-}
-
-async function createProfile(uuid) {
-  const userProfileData = {
-    uuid,
-    fullName: null,
-    preferences: {
-      password: null,
-      newpassword: null,
-      repeatnewpass: null,
-      regularlist: null,
-    },
-  };
-
-  const profileCreated = await Cart.create(userProfileData);
-
-  return profileCreated;
-}
+} */
 
 async function addVerificationCode(uuid) {
   const verificationCode = uuidV4();
@@ -70,8 +49,8 @@ async function addVerificationCode(uuid) {
 }
 
 async function sendEmailRegistration(userEmail, verificationCode) {
-                       /* http://localhost:3000/api */
-  const linkActivacion = `https://family-shopping-cart.herokuapp.com/api/account/activate?verification_code=${verificationCode}`;
+  const linkActivacion = `http://localhost:3000/api/account/activate?verification_code=${verificationCode}`;
+  /* const linkActivacion = `https://family-shopping-cart.herokuapp.com/api/account/activate?verification_code=${verificationCode}`; */
   const msg = {
     to: userEmail,
     from: {
@@ -84,7 +63,6 @@ async function sendEmailRegistration(userEmail, verificationCode) {
   };
 
   const data = await sendgridMail.send(msg);
-
   return data;
 }
 
@@ -107,7 +85,7 @@ async function createAccount(req, res, next) {
   const sqlInsercion = 'INSERT INTO users SET ?';
 
   try {
-    const resultado = await connection.query(sqlInsercion, {
+    await connection.query(sqlInsercion, {
       uuid,
       fullName,
       email: accountData.email,
@@ -119,15 +97,14 @@ async function createAccount(req, res, next) {
     const verificationCode = await addVerificationCode(uuid);
 
     await sendEmailRegistration(accountData.email, verificationCode);
-    await createCart(uuid);
-    await createProfile(uuid);
+    /* await createCart(uuid); */
 
     return res.status(201).send();
   } catch (e) {
     if (connection) {
       connection.release();
     }
-
+    console.error('error', e);
     return res.status(500).send(e.message);
   }
 }

@@ -16,13 +16,17 @@ async function validateData(payload) {
 
 async function login(req, res, next) {
 
+  /* Validate input data with Joi */
+
   const accountData = { ...req.body };
-  
+
   try {
     await validateData(accountData);
   } catch (e) {
     return res.status(400).send(e);
   }
+
+  /* Check if the user exists in the bbdd */
 
   try {
     const connection = await mysql.getConnection();
@@ -35,9 +39,14 @@ async function login(req, res, next) {
     if (result.length === 1) {
       const userData = result[0];
 
-      if (!userData.activated_at) {
+      /* Verify if you have activated the account */
+
+      const modifyDate = userData.activated_at;
+      if (isNaN(modifyDate)) {
         return res.status(403).send();
       }
+
+      /* Check if the user exists in the bbdd */
 
       const laPasswordEstaOk = await bcrypt.compare(accountData.password, userData.password);
       if (laPasswordEstaOk === false) {
