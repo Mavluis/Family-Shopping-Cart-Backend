@@ -47,5 +47,5 @@ It is a web application, where the whole family can add products in the family s
 
 Version v.1.0
 
-Angular CLI: 7.3.8 - Node: 10.14.1 - FireBase Hosting - BB.DD MySQL - Javascript - Fontawesome.
+Node: 10.14.1 - API REST - Express 4.16.4 - FireBase Hosting - BB.DD MySQL 1.6.5 - Javascript.
 
