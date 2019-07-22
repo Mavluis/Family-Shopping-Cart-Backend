@@ -45,11 +45,11 @@ It is a web application, where the whole family can add products in the family s
 ![13-My-account]
 (https://res.cloudinary.com/luisfernandez/image/upload/v1563779270/Pantallazos%20Proyecto/13-My-account_jvzbhc.png)
 
-Version v.1.0 
-Angular CLI: 7.3.8 
+Version v.1.0
+ Angular CLI: 7.3.8 
 Node: 10.14.1 
 FireBase Hosting 
 BB.DD MySQL 
 Javascript 
-Fontawesome 
+Fontawesome
 
