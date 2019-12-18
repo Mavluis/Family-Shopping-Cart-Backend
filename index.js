@@ -43,6 +43,7 @@ async function init() {
       'TomatoBrick', 
       'Water', 
       'Yogourt', 
+
       'Butter', 
       'ColdCuts', 
       'Eggs', 
@@ -53,6 +54,7 @@ async function init() {
       'Sausages', 
       'Spaghetti', 
       'Squash', 
+
       'Apples', 
       'Celery', 
       'CleaningSupplies', 
@@ -63,6 +65,7 @@ async function init() {
       'Pizza', 
       'Strawberries', 
       'Zucchini', 
+
       'Bananas', 
       'BottledWater', 
       'Cherry', 
