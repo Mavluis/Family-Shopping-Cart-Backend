@@ -50,10 +50,10 @@ async function sendEmailRegistration(userEmail, verificationCode) {
   const msg = {
     to: userEmail,
     from: {
-      email: 'familyshoppingcart@yopmail.com',
-      name: 'Family Shopping Cart',
+      email: 'familyshopcart@familyshopcart.com',
+      name: 'Family Shop Cart',
     },
-    subject: 'Welcome to Family Shopping Cart',
+    subject: 'Welcome to Family Shop Cart',
     html: `Don't ever forget any product in the supermarket. <br> <br>
     To confirm the account <a href="${linkActivacion}">CLICK HERE TO ACTIVATE, PLEASE!!!</a>`,
   };
