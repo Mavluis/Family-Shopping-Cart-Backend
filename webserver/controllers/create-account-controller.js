@@ -46,8 +46,8 @@ async function addVerificationCode(uuid) {
 and can already get into your Cart. */
 
 async function sendEmailRegistration(userEmail, verificationCode) {
-  const linkActivacion = `https://family-shopping-cart.herokuapp.com/api/account/activate?verification_code=${verificationCode}`;
-
+  // const linkActivacion = `https://family-shopping-cart.herokuapp.com/api/account/activate?verification_code=${verificationCode}`;
+  const linkActivacion = `http://localhost:4200/account/activate?verification_code=${verificationCode}`;
   const msg = {
     to: userEmail,
     from: {
