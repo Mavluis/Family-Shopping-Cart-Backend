@@ -47,6 +47,7 @@ and can already get into your Cart. */
 
 async function sendEmailRegistration(userEmail, verificationCode) {
   const linkActivacion = `https://family-shopping-cart.herokuapp.com/api/account/activate?verification_code=${verificationCode}`;
+
   const msg = {
     to: userEmail,
     from: {
