@@ -21,6 +21,7 @@ async function validate(payload) {
   return Joi.validate(payload, validation);
 }
 
+
 /* Inserts in the BB.DD the data of the user, user_uuid, 
 verification_code and created_at. */
 
