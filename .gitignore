@@ -1,0 +1,7 @@
+# Código gitignore para evitar procesar los directorios de las dependencias
+
+# compiled output
+/node_modules
+
+# profiling files
+.env
