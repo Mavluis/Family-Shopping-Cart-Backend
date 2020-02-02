@@ -16,8 +16,7 @@ async function validate(payload) {
   const validation = {
     email: Joi.string().email({ minDomainAtoms: 2 }).required(),
     password: Joi.string().regex(/^[a-zA-Z0-9!¡"#$%&()*+,-./:;<=>¿?@_{}~·']{3,30}$/).required(),
-    fullName: Joi.string().alphanum().min(3).max(30).required()
-    // fullName: Joi.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9 ]*$/).required()
+    fullName: Joi.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9 áéíóúÁÉÍÓÚ]*$/).required()
   };
   return Joi.validate(payload, validation);
 }
