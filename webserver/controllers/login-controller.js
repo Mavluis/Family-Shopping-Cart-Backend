@@ -12,7 +12,8 @@ the @ and the password that contains between 3 and 30 characters. */
 async function validateData(payload) {
   const schema = {
     email: Joi.string().email({ minDomainAtoms: 2 }).required(),
-    password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/).required(),
+    // password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/).required(),
+    password: Joi.string().regex(/^[a-zA-Z0-9!¡"#$%&()*+,-./:;<=>¿?@_{}~·']{3,30}$/).required(),
   };
 
   return Joi.validate(payload, schema);
