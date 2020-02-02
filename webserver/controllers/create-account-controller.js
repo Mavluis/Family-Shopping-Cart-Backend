@@ -51,7 +51,7 @@ async function sendEmailRegistration(userEmail, verificationCode) {
   const msg = {
     to: userEmail,
     from: {
-      email: 'familyshopcart@familyshopcart.com',
+      email: 'support@familyshopcart.com',
       name: 'Family Shop Cart',
     },
     subject: 'Welcome to Family Shop Cart',
