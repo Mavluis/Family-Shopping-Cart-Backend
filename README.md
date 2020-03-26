@@ -33,6 +33,9 @@ It is a web application, where the whole family can add products in the family s
 ![13-Not-Found](https://res.cloudinary.com/luisfernandez/image/upload/v1580831661/13-Not-Found_wfci2w.png)
 
 Version v.1.1
+Add loader svg.
+
+Version v.1.1
 Modified web name, added special characters in the password as (.,;:).
 
 Version v.1.0
