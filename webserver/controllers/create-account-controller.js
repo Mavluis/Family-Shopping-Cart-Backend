@@ -55,7 +55,7 @@ async function sendEmailRegistration(userEmail, verificationCode) {
       name: 'Family Shop Cart',
     },
     // subject: 'Welcome to Family Shop Cart',
-    subject: 'Bienvenido a Family Shop Cart',
+    subject: 'Bienvenido/a a Family Shop Cart',
     // html: `You'll never forget any product in the supermarket. <br> <br>
     html: `Nunca olvidarás ningún producto en el supermercado. <br> <br>
     Para confirmar la cuenta <a href="${linkActivacion}">CLICK AQUI PARA ACTIVAR, POR FAVOR!!!</a>`,

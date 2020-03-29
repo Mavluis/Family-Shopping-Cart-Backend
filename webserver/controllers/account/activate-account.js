@@ -37,7 +37,7 @@ AND verified_at IS NULL`;
       if (resultActivateUser[0].affectedRows === 1) {
         connection.release();
         // return res.send('ACCOUNT ACTIVATED!!! Now you can log in and start using your account!!!');
-        return res.send('CUENTA ACTIVADA!!! Ahora ya puedes logarte y empezar a usar tu cuenta!!!');
+        return res.send('CUENTA ACTIVADA!!! Ahora ya puedes iniciar sesión y empezar a usar tu cuenta!!!');
       }
 
     }
