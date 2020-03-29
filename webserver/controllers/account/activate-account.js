@@ -36,13 +36,15 @@ AND verified_at IS NULL`;
       const resultActivateUser = await connection.query(sqlActivateUserQuery);
       if (resultActivateUser[0].affectedRows === 1) {
         connection.release();
-        return res.send('ACCOUNT ACTIVATED!!! Now you can log in and start using your account!');
+        // return res.send('ACCOUNT ACTIVATED!!! Now you can log in and start using your account!!!');
+        return res.send('CUENTA ACTIVADA!!! Ahora ya puedes logarte y empezar a usar tu cuenta!!!');
       }
 
     }
 
     connection.release();
-    return res.send('Verification Code Invalid');
+    // return res.send('Verification Code Invalid');
+    return res.send('Código de Verificación Invalido!!!');
   } catch (e) {
     return res.status(500).send(e.message);
   }
