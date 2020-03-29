@@ -65,7 +65,7 @@ async function init() {
       'Papel(cocina)', 
       'Papel(WC)', 
       'Patatas', 
-      'Patatas_bolsa', 
+      'Patatas(bolsa)', 
 
       'Peras', 
       'Pizzas', 
