@@ -56,10 +56,8 @@ async function sendEmailRegistration(userEmail, verificationCode) {
     },
     // subject: 'Welcome to Family Shop Cart',
     subject: 'Bienvenido/a a Family Shop Cart',
-    // html: `You'll never forget any product in the supermarket. <br> <br>
     html: `Nunca olvidarás ningún producto en el supermercado. <br> <br>
-    Para confirmar la cuenta <a href="${linkActivacion}">CLICK AQUI PARA ACTIVAR, POR FAVOR!!!</a>`,
-    // To confirm the account <a href="${linkActivacion}">CLICK HERE TO ACTIVATE, PLEASE!!!</a>`,
+    Para confirmar la cuenta <a href="${linkActivacion}">CLICK AQUI PARA ACTIVAR, POR FAVOR!!!</a>`
   };
 
   const data = await sendgridMail.send(msg);
