@@ -84,8 +84,8 @@ async function init() {
     process.exit(1);
   }
 
-  const port = process.env.PORT;
-  // const port = 3000;
+  // const port = process.env.PORT;
+  const port = 3000;
   app.listen(port, () => {
     console.log(`Server running and listening on port ${port}`);
   });
